@@ -43,5 +43,3 @@ ID           NAME
 SQL> commit;
 
 Commit complete.
-
-SQL> spool off;
