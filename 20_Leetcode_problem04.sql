@@ -33,5 +33,3 @@ SQL> select  distinct author_id as id from Views
 SQL> commit;
 
 Commit complete.
-
-SQL> spool off;
