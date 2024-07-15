@@ -49,5 +49,3 @@ SQL> Select * from Cinema
 SQL> commit;
 
 Commit complete.
-
-SQL> spool off;
