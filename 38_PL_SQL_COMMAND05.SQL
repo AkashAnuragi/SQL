@@ -1,0 +1,29 @@
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2    EMP_ID NUMBER;
+  3    EMP_NAME VARCHAR(100);
+  4    DOB DATE;
+  5    JOBTYPE VARCHAR(100);
+  6  BEGIN
+  7  
+  8    SELECT ENO INTO EMP_ID FROM EMP
+  9    WHERE ENAME LIKE 'A%' AND ROWNUM = 1;
+ 10    DBMS_OUTPUT.PUT_LINE('QUERY1 ENO ID ' || EMP_ID);
+ 11  
+ 12    SELECT BDATE, ENAME INTO DOB, EMP_NAME FROM EMP
+ 13    WHERE BDATE BETWEEN TO_DATE('12-DEC-2002','DD-MM-YYYY') AND TO_DATE('23-JAN-2004','DD-MM-YYYY') AND ROWNUM = 1;
+ 14    DBMS_OUTPUT.PUT_LINE('QUERY2 DOB : ' || DOB || ' EMPLOYEE NAME IS : '|| EMP_NAME);
+ 15  
+ 16    SELECT TITLE INTO JOBTYPE FROM EMP WHERE (DNO IS NULL OR DNO = '201') AND ROWNUM = 1;
+ 17    DBMS_OUTPUT.PUT_LINE('QUERY3 TITLE : ' || JOBTYPE);
+ 18  
+ 19  END;
+ 20  /
+QUERY1 ENO ID 101                                                               
+QUERY2 DOB : 12-DEC-02 EMPLOYEE NAME IS : Akash Anuragi                         
+QUERY3 TITLE : SE                                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT OFF;
+
