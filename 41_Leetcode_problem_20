@@ -1,0 +1,6 @@
+select p.product_name, SUM(o.unit) as unit from Products p 
+join  Orders o
+on p.product_id = o.product_id 
+where TO_CHAR(o.order_date,'yyyy-mm') = '2020-02'
+Group by p.product_id,p.Product_name
+having SUM(o.unit)>=100; 
