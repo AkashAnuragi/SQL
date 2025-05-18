@@ -1,0 +1,33 @@
+WITH user_types AS (
+    SELECT user_id,
+           MAX(CASE WHEN activity_type = 'free_trial' THEN 1 ELSE 0 END) AS has_trial,
+           MAX(CASE WHEN activity_type = 'paid' THEN 1 ELSE 0 END) AS has_paid
+    FROM UserActivity
+    GROUP BY user_id
+),
+converted_users AS (
+    SELECT user_id
+    FROM user_types
+    WHERE has_trial = 1 AND has_paid = 1
+),
+trial_avg AS (
+    SELECT user_id,
+           ROUND(AVG(activity_duration), 2) AS trial_avg_duration
+    FROM UserActivity
+    WHERE activity_type = 'free_trial'
+    GROUP BY user_id
+),
+paid_avg AS (
+    SELECT user_id,
+           ROUND(AVG(activity_duration), 2) AS paid_avg_duration
+    FROM UserActivity
+    WHERE activity_type = 'paid'
+    GROUP BY user_id
+)
+SELECT cu.user_id,
+       ta.trial_avg_duration,
+       pa.paid_avg_duration
+FROM converted_users cu
+LEFT JOIN trial_avg ta ON cu.user_id = ta.user_id
+LEFT JOIN paid_avg pa ON cu.user_id = pa.user_id
+ORDER BY cu.user_id;
